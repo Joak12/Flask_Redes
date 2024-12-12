@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Meus Filmes
+{% endblock %}
+
+{% block barra_navegacao %}
+    <a href="{{url_for('addfilme')}}">Novo Filme</a>
+    <a href="{{url_for('logout')}}">Sair</a>
+{% endblock %}
+
+{% block conteudo %}
+    <main id="filmes">
+        <ul>
+            {%for filme in filmes%}
+            <li id="lista-filmes">
+                <div id="info-filmes">
+                    <p id="titulo">{{filme['fil_nome']}}</p>
+                    <p id="genero"><b>Gênero:</b> {{filme['fil_genero']}}</p>
+                </div>
+                <div id="avalia-filmes">
+                    <a href="{{url_for('veravaliacao', fil_id=filme['fil_id'])}}">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <form action="{{ url_for('removefilme', fil_id=filme['fil_id']) }}" method="post" style="display: inline;" id="excluir">
+                        <button type="submit" aria-label="Excluir filme" style="background: none; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                    <a href="{{url_for('avaliarfilme', fil_id=filme['fil_id']) }}">
+                        <i class="fa-solid fa-star"></i>
+                    </a>
+                </div>
+            </li>
+            {%endfor%}
+        </ul>
+    </main>
+{% endblock %}
